@@ -5,9 +5,9 @@ class Play extends Phaser.Scene {
 
     preload() {
         //Load sprites
-        this.load.image('starfield', 'assets/starfield.png');
-        this.load.image('rocket', 'assets/rocket.png');
-        this.load.image('ship', 'assets/spaceship.png');
+        this.load.image('starfield', 'assets/Sea_BG.png');
+        this.load.image('rocket', 'assets/Hook.png');
+        this.load.image('ship', 'assets/fish1.png');
 
         // load explosion spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
@@ -24,7 +24,7 @@ class Play extends Phaser.Scene {
         this.p1Rocket = new Rocket(
             this,
             game.config.width/2,
-            game.config.height - borderUISize - borderPadding,
+            borderUISize*4,
             'rocket',
             10
         ).setOrigin(0.5, 0);
@@ -33,7 +33,7 @@ class Play extends Phaser.Scene {
         this.ship1 = new Ship(
             this,
             game.config.width + borderUISize*6,
-            borderUISize*4,
+            borderUISize*10,
             'ship',
             0,
             30
@@ -42,7 +42,7 @@ class Play extends Phaser.Scene {
         this.ship2 = new Ship(
             this,
             game.config.width + borderUISize*3,
-            borderUISize*5,
+            borderUISize*11,
             'ship',
             0,
             20
@@ -57,20 +57,20 @@ class Play extends Phaser.Scene {
             10
         ).setOrigin(0,0);
 
-        // green UI background
+        // UI Background
         this.add.rectangle(
             0,
-            borderUISize + borderPadding,
+            borderUISize,
             game.config.width,
             borderUISize * 2,
-            0x00FF00,
+            0x000015,
             ).setOrigin(0,0);
 
         // white borders
-	    this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
-	    this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
-	    this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
-	    this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
+	    this.add.rectangle(0, 0, game.config.width, borderUISize, 0x7a9eff).setOrigin(0 ,0);
+	    this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0x7a9eff).setOrigin(0 ,0);
+	    this.add.rectangle(0, 0, borderUISize, game.config.height, 0x7a9eff).setOrigin(0 ,0);
+	    this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0x7a9eff).setOrigin(0 ,0);
 
         //Instantiate input keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
