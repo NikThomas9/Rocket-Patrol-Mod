@@ -1,3 +1,16 @@
+/*
+// Created by Niklas Thomas
+// 
+//////// POINT BREAKDOWN ////////
+// 60: Redesign the Game's Theme (60)
+// 20: New Spaceship Type (20)
+// 20: Clock Time Mechanism (20) 
+// TOTAL: 100 pts
+//
+// Sources: https://phaser.discourse.group/t/is-there-fixedupdate-like-unity-in-phaser/5953
+//          https://freesound.org/people/qubodup/sounds/60013/
+*/
+
 let config = {
     type: Phaser.CANVAS,
     width: 640,

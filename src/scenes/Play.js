@@ -7,10 +7,11 @@ class Play extends Phaser.Scene {
         //Load sprites
         this.load.image('starfield', 'assets/Sea_BG.png');
         this.load.image('rocket', 'assets/Hook.png');
-        this.load.image('ship', 'assets/fish1.png');
+        //this.load.image('ship', 'assets/fish1.png');
 
         // load explosion spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.spritesheet('ship', './assets/fish-Sheet.png', {frameWidth: 42, frameHeight: 38, startFrame: 0, endFrame: 1});
     }
 
     create() {
@@ -67,10 +68,10 @@ class Play extends Phaser.Scene {
             ).setOrigin(0,0);
 
         // white borders
-	    this.add.rectangle(0, 0, game.config.width, borderUISize, 0x7a9eff).setOrigin(0 ,0);
-	    this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0x7a9eff).setOrigin(0 ,0);
-	    this.add.rectangle(0, 0, borderUISize, game.config.height, 0x7a9eff).setOrigin(0 ,0);
-	    this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0x7a9eff).setOrigin(0 ,0);
+	    this.add.rectangle(0, 0, game.config.width, borderUISize, 0x4290f5).setOrigin(0 ,0);
+	    this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0x4290f5).setOrigin(0 ,0);
+	    this.add.rectangle(0, 0, borderUISize, game.config.height, 0x4290f5).setOrigin(0 ,0);
+	    this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0x4290f5).setOrigin(0 ,0);
 
         //Instantiate input keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
@@ -84,6 +85,19 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('explosion', {start: 0, end: 9, first: 0}),
             frameRate: 30
         });
+
+        this.anims.create({
+            key: 'fishSwim',
+            frames: this.anims.generateFrameNumbers('ship', {start: 0, end: 1, first: 0}),
+            frameRate: 2,
+            repeat: -1
+        });
+
+        
+        this.ship1.anims.play('fishSwim');
+        this.ship2.anims.play('fishSwim');
+        this.ship3.anims.play('fishSwim');
+
 
         //Initialize the score
         this.p1Score = 0;
@@ -114,6 +128,7 @@ class Play extends Phaser.Scene {
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
         }, null, this);
+
     }
 
     update() {
