@@ -18,7 +18,7 @@ class Play extends Phaser.Scene {
         //this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
         this.load.spritesheet('ship', './assets/sprites/fish-Sheet.png', {frameWidth: 42, frameHeight: 38, startFrame: 0, endFrame: 1});
         this.load.spritesheet('crab', './assets/sprites/crab-Sheet.png', {frameWidth: 60, frameHeight: 58, startFrame: 0, endFrame: 1});
-        this.load.spritesheet('bubble', './assets/sprites/bubbleSheet.png', {frameWidth: 54, frameHeight: 54, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('bubble', './assets/sprites/test2.png', {frameWidth: 54, frameHeight: 54, startFrame: 0, endFrame: 2});
     }
 
     create() {
