@@ -9,6 +9,7 @@ class Play extends Phaser.Scene {
         this.load.image('starfield2', 'assets/Sea_BG2.png');
         this.load.image('starfield3', 'assets/Sea_BG3.png');
         this.load.image('UIButton', 'assets/UI 1.png');
+        this.load.image('UIButton2', 'assets/UI 2.png');
         this.load.image('sand', 'assets/Sand.png');
         this.load.image('rocket', 'assets/Hook.png');
         //this.load.image('ship', 'assets/fish1.png');
@@ -148,16 +149,21 @@ class Play extends Phaser.Scene {
             fontSize: '28px',
             backgroundColor: '#4290f5',
             color: '#FFFFFF',
-            align: 'right',
+            align: 'center',
             padding: {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 100
+            fixedWidth: 50
         }
         this.UIButton = this.add.tileSprite(
             55,35,0,0, 'UIButton'
         ).setOrigin(0,0);
+
+        this.UIButton2 = this.add.tileSprite(
+            300,35,0,0, 'UIButton2'
+        ).setOrigin(0,0);
+
 
         this.scoreLeft = this.add.text(65, 50, this.p1Score, scoreConfig);
 
@@ -172,7 +178,7 @@ class Play extends Phaser.Scene {
             this.gameOver = true;
         }, null, this);
 
-        this.timer = this.add.text(300,55);
+        this.timer = this.add.text(320,58);
 
         //Display Timer
         /*this.timer = {
