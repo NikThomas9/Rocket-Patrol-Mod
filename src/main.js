@@ -2,9 +2,10 @@
 // Created by Niklas Thomas
 // 
 //////// POINT BREAKDOWN ////////
-// 60: Redesign the Game's Theme (60)
-// 20: New Spaceship Type (20)
-// 20: Clock Time Mechanism (20) 
+// Redesign the Game's Theme (60)
+// New Spaceship Type (20)
+// Parallax Scrolling (10)
+// Timer Display (10)
 // TOTAL: 100 pts
 //
 // Sources: https://phaser.discourse.group/t/is-there-fixedupdate-like-unity-in-phaser/5953

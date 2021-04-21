@@ -2,10 +2,13 @@ class Play extends Phaser.Scene {
     constructor() {
         super("playScene");
     }
-
+    
     preload() {
         //Load sprites
-        this.load.image('starfield', 'assets/Sea_BG.png');
+        this.load.image('starfield', 'assets/Sea_BG1.png');
+        this.load.image('starfield2', 'assets/Sea_BG2.png');
+        this.load.image('starfield3', 'assets/Sea_BG3.png');
+        this.load.image('UIButton', 'assets/UI 1.png');
         this.load.image('sand', 'assets/Sand.png');
         this.load.image('rocket', 'assets/Hook.png');
         //this.load.image('ship', 'assets/fish1.png');
@@ -18,12 +21,21 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-
         //Add BG
-        this.starfield = this.add.tileSprite(
-            0,0,640,480, 'starfield'
+        this.starfield3 = this.add.tileSprite(
+            0,0,640,480, 'starfield3'
         ).setOrigin(0,0);
 
+        //Add BG
+        this.starfield2 = this.add.tileSprite(
+            0,0,640,480, 'starfield2'
+        ).setOrigin(0,0);
+
+        //Add BG
+        this.starfield1 = this.add.tileSprite(
+            0,0,640,480, 'starfield'
+        ).setOrigin(0,0);
+        
         this.sand = this.add.tileSprite(
             0,-30,640,480, 'sand'
         ).setOrigin(0,0);
@@ -84,10 +96,10 @@ class Play extends Phaser.Scene {
             borderUISize,
             game.config.width,
             borderUISize * 2,
-            0x000015,
+            0x27528a,
             ).setOrigin(0,0);
 
-        // white borders
+        //Borders
 	    this.add.rectangle(0, 0, game.config.width, borderUISize, 0x4290f5).setOrigin(0 ,0);
 	    this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0x4290f5).setOrigin(0 ,0);
 	    this.add.rectangle(0, 0, borderUISize, game.config.height, 0x4290f5).setOrigin(0 ,0);
@@ -134,8 +146,8 @@ class Play extends Phaser.Scene {
         let scoreConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            backgroundColor: '#4290f5',
+            color: '#FFFFFF',
             align: 'right',
             padding: {
                 top: 5,
@@ -143,7 +155,11 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
+        this.UIButton = this.add.tileSprite(
+            55,35,0,0, 'UIButton'
+        ).setOrigin(0,0);
+
+        this.scoreLeft = this.add.text(65, 50, this.p1Score, scoreConfig);
 
         //Game Over flag
         this.gameOver = false;
@@ -156,25 +172,30 @@ class Play extends Phaser.Scene {
             this.gameOver = true;
         }, null, this);
 
+        this.timer = this.add.text(300,55);
 
         //Display Timer
-        let timer = {
-            fontFamily: 'Courier',
+        /*this.timer = {
+            fontFamily: 'Oranienbaum',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
-            align: 'right',
+            backgroundColor: '#4290f5',
+            color: '#FFFFFF',
+            align: 'left',
             padding: {
                 top: 5,
                 bottom: 5,
             },
             fixedWidth: 300
-        }
-        this.timer = this.add.text((borderUISize + borderPadding) *6, borderUISize + borderPadding*2, 
-                    "Time: " + this.clock.timeScale, timer);
+        }*/
+
+        //this.timer = this.add.text((borderUISize + borderPadding) *6, borderUISize + borderPadding*2, 
+        //"Time: " + this.clock.getProgress().toString(), timer);
     }
 
     update() {
+        //Timer
+        //this.timer.setText("Time: " + this.clock.getElapsedSeconds().toString().substr(0, 4));
+        this.timer.setText("Time: " + ((game.settings.gameTimer - this.clock.getElapsed())/1000).toString().substr(0, 4)); 
         //If game over, check input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.restart();
@@ -187,7 +208,8 @@ class Play extends Phaser.Scene {
     
 
         //Call update on each object
-        this.starfield.tilePositionX -= 4;
+        this.starfield1.tilePositionX -= 3;
+        this.starfield2.tilePositionX -= 2;
         if (!this.gameOver)
         {
             this.p1Rocket.update();
