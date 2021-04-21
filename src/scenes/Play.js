@@ -6,12 +6,15 @@ class Play extends Phaser.Scene {
     preload() {
         //Load sprites
         this.load.image('starfield', 'assets/Sea_BG.png');
+        this.load.image('sand', 'assets/Sand.png');
         this.load.image('rocket', 'assets/Hook.png');
         //this.load.image('ship', 'assets/fish1.png');
 
         // load explosion spritesheet
-        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
+        //this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
         this.load.spritesheet('ship', './assets/fish-Sheet.png', {frameWidth: 42, frameHeight: 38, startFrame: 0, endFrame: 1});
+        this.load.spritesheet('crab', './assets/crab-Sheet.png', {frameWidth: 60, frameHeight: 58, startFrame: 0, endFrame: 1});
+        this.load.spritesheet('bubble', './assets/bubblePop-sheet.png', {frameWidth: 54, frameHeight: 54, startFrame: 0, endFrame: 2});
     }
 
     create() {
@@ -19,6 +22,10 @@ class Play extends Phaser.Scene {
         //Add BG
         this.starfield = this.add.tileSprite(
             0,0,640,480, 'starfield'
+        ).setOrigin(0,0);
+
+        this.sand = this.add.tileSprite(
+            0,-30,640,480, 'sand'
         ).setOrigin(0,0);
 
         //Create player object
@@ -34,28 +41,41 @@ class Play extends Phaser.Scene {
         this.ship1 = new Ship(
             this,
             game.config.width + borderUISize*6,
-            borderUISize*10,
+            borderUISize*6 + borderPadding*3,
             'ship',
             0,
-            30
+            10,
+            1
         ).setOrigin(0,0);
 
         this.ship2 = new Ship(
             this,
-            game.config.width + borderUISize*3,
-            borderUISize*11,
+            game.config.width + borderUISize * 3,
+            borderUISize*7.5,
             'ship',
             0,
-            20
+            20,
+            1.2
         ).setOrigin(0,0);
 
         this.ship3 = new Ship(
             this,
             game.config.width,
-            borderUISize*6 + borderPadding*4,
+            borderUISize*9,
             'ship',
             0,
-            10
+            30,
+            1.5
+        ).setOrigin(0,0);
+
+        this.crab = new Ship(
+            this,
+            game.config.width,
+            borderUISize*10 + borderPadding*4,
+            'crab',
+            0,
+            50,
+            2
         ).setOrigin(0,0);
 
         // UI Background
@@ -79,10 +99,10 @@ class Play extends Phaser.Scene {
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);      
 
-        //Animation config
+        //Animation config//
         this.anims.create({
-            key: 'explode',
-            frames: this.anims.generateFrameNumbers('explosion', {start: 0, end: 9, first: 0}),
+            key: 'bubblePop',
+            frames: this.anims.generateFrameNumbers('bubble', {start: 0, end: 2, first: 0}),
             frameRate: 30
         });
 
@@ -93,10 +113,18 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
-        
+        this.anims.create({
+            key: 'crabWalk',
+            frames: this.anims.generateFrameNumbers('crab', {start: 0, end: 1, first: 0}),
+            frameRate: 2,
+            repeat: -1
+        });
+
+        //Enemy Animations//
         this.ship1.anims.play('fishSwim');
         this.ship2.anims.play('fishSwim');
         this.ship3.anims.play('fishSwim');
+        this.crab.anims.play('crabWalk');
 
 
         //Initialize the score
@@ -117,11 +145,10 @@ class Play extends Phaser.Scene {
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
 
-
         //Game Over flag
         this.gameOver = false;
-
-        //60-second play clock
+        
+        //Clock
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
@@ -129,6 +156,22 @@ class Play extends Phaser.Scene {
             this.gameOver = true;
         }, null, this);
 
+
+        //Display Timer
+        let timer = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 300
+        }
+        this.timer = this.add.text((borderUISize + borderPadding) *6, borderUISize + borderPadding*2, 
+                    "Time: " + this.clock.timeScale, timer);
     }
 
     update() {
@@ -151,6 +194,7 @@ class Play extends Phaser.Scene {
             this.ship1.update();
             this.ship2.update();
             this.ship3.update();
+            this.crab.update();
         }
 
         // check collisions
@@ -165,6 +209,10 @@ class Play extends Phaser.Scene {
         if (this.checkCollision(this.p1Rocket, this.ship1)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship1);       
+        }
+        if (this.checkCollision(this.p1Rocket, this.crab)) {
+            this.p1Rocket.reset();
+            this.shipExplode(this.crab);       
         }
     }
 
@@ -189,8 +237,8 @@ class Play extends Phaser.Scene {
         ship.alpha = 0;
 
         //Create explosion animation on ship's location
-        let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
-        boom.anims.play('explode');             // play explode animation
+        let boom = this.add.sprite(ship.x, ship.y, 'bubble').setOrigin(0, 0);
+        boom.anims.play('bubblePop');             // play explode animation
         boom.on('animationcomplete', () => {    // callback after anim completes
           ship.reset();                         // reset ship position
           ship.alpha = 1;                       // make ship visible again

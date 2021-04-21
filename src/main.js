@@ -9,6 +9,7 @@
 //
 // Sources: https://phaser.discourse.group/t/is-there-fixedupdate-like-unity-in-phaser/5953
 //          https://freesound.org/people/qubodup/sounds/60013/
+//          https://freesound.org/people/Glaneur%20de%20sons/sounds/104945/
 */
 
 let config = {
@@ -17,7 +18,7 @@ let config = {
     height: 480,
     scene: [Menu, Play],
     fps: {
-        target: 120,
+        target: 60,
         forceSetTimeOut: true
     }
 }
