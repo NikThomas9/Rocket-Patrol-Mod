@@ -5,20 +5,20 @@ class Play extends Phaser.Scene {
     
     preload() {
         //Load sprites
-        this.load.image('starfield', 'assets/Sea_BG1.png');
-        this.load.image('starfield2', 'assets/Sea_BG2.png');
-        this.load.image('starfield3', 'assets/Sea_BG3.png');
-        this.load.image('UIButton', 'assets/UI 1.png');
-        this.load.image('UIButton2', 'assets/UI 2.png');
-        this.load.image('sand', 'assets/Sand.png');
-        this.load.image('rocket', 'assets/Hook.png');
+        this.load.image('starfield', 'assets/sprites/Sea_BG1.png');
+        this.load.image('starfield2', 'assets/sprites/Sea_BG2.png');
+        this.load.image('starfield3', 'assets/sprites/Sea_BG3.png');
+        this.load.image('UIButton', 'assets/sprites/UI 1.png');
+        this.load.image('UIButton2', 'assets/sprites/UI 2.png');
+        this.load.image('sand', 'assets/sprites/Sand.png');
+        this.load.image('rocket', 'assets/sprites/Hook.png');
         //this.load.image('ship', 'assets/fish1.png');
 
         // load explosion spritesheet
         //this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
-        this.load.spritesheet('ship', './assets/fish-Sheet.png', {frameWidth: 42, frameHeight: 38, startFrame: 0, endFrame: 1});
-        this.load.spritesheet('crab', './assets/crab-Sheet.png', {frameWidth: 60, frameHeight: 58, startFrame: 0, endFrame: 1});
-        this.load.spritesheet('bubble', './assets/bubblePop-sheet.png', {frameWidth: 54, frameHeight: 54, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('ship', './assets/sprites/fish-Sheet.png', {frameWidth: 42, frameHeight: 38, startFrame: 0, endFrame: 1});
+        this.load.spritesheet('crab', './assets/sprites/crab-Sheet.png', {frameWidth: 60, frameHeight: 58, startFrame: 0, endFrame: 1});
+        this.load.spritesheet('bubble', './assets/sprites/bubbleSheet.png', {frameWidth: 54, frameHeight: 54, startFrame: 0, endFrame: 2});
     }
 
     create() {
@@ -277,6 +277,6 @@ class Play extends Phaser.Scene {
             this.scoreLeft.text = this.p1Score;
         });       
 
-        //this.sound.play('sfx_explosion');
+        this.sound.play('sfx_explosion');
       }
 }
